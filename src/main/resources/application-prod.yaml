@@ -1,0 +1,64 @@
+server:
+  port: ${PORT:8080}
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/tink}
+    username: ${datasource.username}
+    password: ${datasource.password}
+  jpa:
+    properties:
+      hibernate:
+        dialect: ${jpa.dialect}
+        format_sql: true
+        hbm2ddl:
+          auto: update
+  liquibase:
+    change-log: ${liquibase.change-log}
+  springdoc:
+    swagger-ui:
+      path: ${swagger-setup.swagger-path}
+  servlet:
+    multipart:
+      max-file-size: ${file.max-size}
+      max-request-size: ${file.max-size}
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: never
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceId: AUTO
+          jobStore:
+            driverDelegateClass: ${quartz.driver}
+            useProperties: false
+            tablePrefix: QRTZ_
+            clusterCheckinInterval: 5000
+            isClustered: true
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10
+            threadsInheritContextClassLoaderOfInitializingThread: true
+    auto-startup: false
+
+jwt:
+  secret: ${jwt-token.secret}
+  issuer: ${jwt-token.issuer}
+storage:
+  url: http://localhost:9002
+  port: 9002
+  accessKey: user
+  secretKey: password
+  secure: false
+  bucket: minio-storage
+  image-size: 10485760 #10 Mb
+cors:
+  allowed-origin: ${front-url}
+admin:
+  email: ${admin-data.email}
+  nickname: ${admin-data.nickname}
+  password: ${admin-data.password}
+scheduler:
+  permanent-jobs-group-name: PERMANENT
+  delete-comment-job-cron: ${DELETE_COMMENT_JOB_CRON:0 */15 * * * ?}

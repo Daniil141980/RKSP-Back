@@ -1,0 +1,57 @@
+server:
+  port: ${PORT:8080}
+spring:
+  datasource:
+    url: 'jdbc:postgresql://localhost:35100/tink'
+    username: 'user'
+    password: 'password'
+  jpa:
+    properties:
+      hibernate:
+        dialect: 'org.hibernate.dialect.PostgreSQLDialect'
+        format_sql: true
+  liquibase:
+    change-log: classpath:/db/changelog/main-changelog.yaml
+  springdoc:
+    swagger-ui:
+      path: /moi-swagger.html
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: never
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceId: AUTO
+          jobStore:
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+            useProperties: false
+            tablePrefix: QRTZ_
+            clusterCheckinInterval: 5000
+            isClustered: true
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10
+            threadsInheritContextClassLoaderOfInitializingThread: true
+    auto-startup: false
+
+jwt:
+  secret: 77397A24432646294A404E635266556A586E3272357538782F4125442A472D4B
+  issuer: daniil
+storage:
+  location: /home/kalin/IdeaProjects/tinkoff-backend-academy-pet-project/files
+  location-for-photos: /home/kalin/IdeaProjects/tinkoff-backend-academy-pet-project/prfile-photos
+cors:
+  allowed-origin: http://localhost:3000
+admin:
+  email: admin@admin.ru
+  nickname: admin
+  password: admin
+scheduler:
+  permanent-jobs-group-name: PERMANENT
+  delete-comment-job-cron: ${DELETE_COMMENT_JOB_CRON:0 */15 * * * ?}
