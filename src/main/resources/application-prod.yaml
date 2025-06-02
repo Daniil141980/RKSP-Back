@@ -46,8 +46,8 @@ jwt:
   secret: ${jwt-token.secret}
   issuer: ${jwt-token.issuer}
 storage:
-  url: http://localhost:9002
-  port: 9002
+  url: ${storage.url}
+  port: ${storage.port}
   accessKey: user
   secretKey: password
   secure: false
